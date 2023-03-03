@@ -26,9 +26,9 @@ fn main() {
 
         let new_file = match user_input.to_lowercase().trim() {
             str if str.starts_with("http") => {
-                let mut req = client.get(&user_input);
+                let mut req = client.get(str);
 
-                if user_input.contains("i.pximg.net") {
+                if str.contains("i.pximg.net") {
                     req = req.header("Referer", "https://www.pixiv.net/")
                 }
 
@@ -59,7 +59,17 @@ fn main() {
 
                 File::open("temp.img.png").unwrap()
             }
-            x if x.starts_with("file:") => File::open(user_input.replace("file:", "")).unwrap(),
+            str if str.starts_with("file:") => {
+                let path_string = str.replace("file:", "");
+                let path = std::path::Path::new(&path_string);
+
+                if !path.exists() {
+                    println!("{}{}{}", "File (".red(), path_string.cyan(), ") not found!".red());
+                    continue;
+                }
+
+                File::open(path).unwrap()
+            },
             "quit" | "stop" => {
                 let temp_file = std::path::Path::new("temp.img.png");
 
