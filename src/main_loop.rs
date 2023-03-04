@@ -46,6 +46,11 @@ pub fn start(client: reqwest::blocking::Client, mut args: Vec<String>) {
                         continue;
                     }
                 }
+                "cls" | "clear" => {
+                    print!("{}c", 27 as char);
+                    std::io::stdout().flush().unwrap();
+                    continue;
+                }
                 "quit" | "stop" => {
                     remove_temp_file();
                     break;
