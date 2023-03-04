@@ -1,6 +1,6 @@
 # png-metadata
 
-Simple PNG text metadata reader using [png](https://github.com/image-rs/image-png), [reqwest](https://github.com/seanmonstar/reqwest) and [colored](https://github.com/mackwic/colored) to stylish for more readable outputs
+Simple PNG text metadata reader that can read from local file and URL.
 
 ![image](https://user-images.githubusercontent.com/76484203/222798344-e02b7197-cdd0-4309-8230-0544ff73d74d.png)
 
@@ -19,6 +19,8 @@ because pixiv image server ([https://i.pximg.net](https://i.pximg.net)) required
 
 - Prefix with `file:` will search for file you specify (e.g. `file:C:/img/example.png`, `file:"C:/secret-img/secret.png"`)
 - Prefix with `http` will download the image and read from that image (e.g `https://mywebserver/example.png`)
+- `clear` | `cls` to clear terminal screen
+- `quit` | `stop` to exit properly
 
 ---
 
