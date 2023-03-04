@@ -1,15 +1,20 @@
 use std::{fs::File, io::Write};
 
+use clap::Parser;
 use colored::Colorize;
 use reqwest::blocking::Client;
+
+mod structs;
+use structs::Arguments;
 
 const TEMP_FILE_NAME: &str = "temp.img.png";
 
 fn main() {
-    let client = Client::builder()
-        .user_agent("PNG Meta Grabber")
-        .build()
-        .expect("build reqwest client");
+    let client = 
+        Client::builder()
+            .user_agent("PNG Meta Grabber")
+            .build()
+            .expect("build reqwest client");
 
     println!(
         "Path example:\n\t{}\n\t{}\n\"{}\" / \"{}\" to exit",
@@ -18,13 +23,21 @@ fn main() {
         "quit".bright_blue(), "stop".bright_blue()
     );
 
+    let mut argument = Arguments::parse().path.into_iter().rev().collect::<Vec<String>>();
+
     loop {
         println!("-----------------------------------------------------------------");
         print!("{}", "Command: ".bright_magenta());
         std::io::stdout().flush().unwrap();
 
         let mut user_input = String::new();
-        std::io::stdin().read_line(&mut user_input).unwrap();
+
+        if argument.is_empty() {
+            std::io::stdin().read_line(&mut user_input).unwrap();
+        } else {
+            user_input = argument.pop().unwrap();
+            println!("{}", user_input)
+        }
 
         println!("-----------------------------------------------------------------");
 
