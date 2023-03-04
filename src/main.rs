@@ -17,13 +17,22 @@ fn main() {
             .expect("build reqwest client");
 
     println!(
-        "Path example:\n\t{}\n\t{}\n\"{}\" / \"{}\" to exit",
+        "Path example: \n\
+        \t{}\n \
+        \t{}\n \
+        \"{}\" / \"{}\" to exit",
         "file:C:/Image/background.png".yellow(),
         "https://i.pximg.net/img-original/img/2023/03/04/00/42/34/105888900_p1.png".yellow(),
-        "quit".bright_blue(), "stop".bright_blue()
+        "quit".bright_blue(),
+        "stop".bright_blue()
     );
 
-    let mut argument = Arguments::parse().path.into_iter().rev().collect::<Vec<String>>();
+    let mut argument = 
+        Arguments::parse()
+            .path
+            .into_iter()
+            .rev()
+            .collect::<Vec<String>>();
 
     loop {
         println!("-----------------------------------------------------------------");
@@ -98,12 +107,7 @@ fn main() {
                     File::open(path).unwrap()
                 }
                 "quit" | "stop" => {
-                    let temp_file = std::path::Path::new(TEMP_FILE_NAME);
-
-                    if temp_file.exists() {
-                        std::fs::remove_file(temp_file).expect("delete file");
-                    }
-
+                    remove_temp_file();
                     break;
                 }
                 _ => {
@@ -137,6 +141,16 @@ fn main() {
         } else {
             println!("{}", "Not found anything!".red())
         }
+
+        remove_temp_file();
+    }
+}
+
+fn remove_temp_file() {
+    let temp_file = std::path::Path::new(TEMP_FILE_NAME);
+
+    if temp_file.exists() {
+        std::fs::remove_file(temp_file).expect("delete file");
     }
 }
 
