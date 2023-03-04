@@ -47,7 +47,7 @@ pub fn start(client: reqwest::blocking::Client, mut args: Vec<String>) {
                     }
                 }
                 "cls" | "clear" => {
-                    print!("{}c", 27 as char);
+                    print!("\x1Bc");
                     std::io::stdout().flush().unwrap();
                     continue;
                 }
