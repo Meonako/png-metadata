@@ -12,28 +12,28 @@ pub fn start(client: reqwest::blocking::Client, mut args: Vec<String>) {
         print!("{}", "Command: ".bright_magenta());
         std::io::stdout().flush().unwrap();
 
-        let mut user_input = String::new();
+        let mut target = String::new();
 
         if args.is_empty() {
-            std::io::stdin().read_line(&mut user_input).unwrap();
+            std::io::stdin().read_line(&mut target).unwrap();
         } else {
-            user_input = args.pop().unwrap();
-            println!("{}", user_input)
+            target = args.pop().unwrap();
+            println!("{}", target)
         }
 
         println!("-----------------------------------------------------------------");
 
         let new_file = 
-            match user_input.to_lowercase().trim() {
-                str if str.starts_with("http") => {
-                    if let Some(file) = download_file(&client, str) {
+            match target.to_lowercase().trim() {
+                t if t.starts_with("http") => {
+                    if let Some(file) = download_file(&client, t) {
                         file
                     } else {
                         continue;
                     }
                 }
-                str if str.starts_with("file:") => {
-                    if let Some(file) = open_file(str) {
+                t if t.starts_with("file:") => {
+                    if let Some(file) = open_file(t) {
                         file
                     } else {
                         continue;
@@ -56,7 +56,7 @@ pub fn start(client: reqwest::blocking::Client, mut args: Vec<String>) {
                 println!(
                     "{}\n{}{}{}",
                     e.to_string().red(),
-                    "If \"".yellow(),
+                    "Note: If \"".yellow(),
                     "Invalid PNG signature".red(),
                     "\", mostly because the image is not in PNG format".yellow()
                 );
@@ -65,14 +65,14 @@ pub fn start(client: reqwest::blocking::Client, mut args: Vec<String>) {
         };
         let png_info = reader.info();
 
-        let data = get_avaiable_text(png_info);
+        let all_text = get_avaiable_text(png_info);
 
-        if !data.is_empty() {
-            for (key, value) in data {
+        if !all_text.is_empty() {
+            for (key, value) in all_text {
                 println!("{}: {}", key.cyan(), value.green())
             }
         } else {
-            println!("{}", "Not found anything!".red())
+            println!("{}", "No Text Metadata found!".red())
         }
 
         remove_temp_file();
@@ -122,7 +122,11 @@ fn open_file(file_name: &str) -> Option<File> {
 
     if path_string.starts_with("\"") && path_string.ends_with("\"") {
         // Remove first and last double quote
-        path_string = path_string[1..path_string.len() - 1].to_string()
+        // I don't know which one is more efficient, so...
+        //
+        // path_string = path_string[1..path_string.len() - 1].to_string()
+        //
+        path_string = path_string.replace("\"", "")
     }
 
     let path = std::path::Path::new(&path_string);
