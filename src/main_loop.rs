@@ -89,9 +89,7 @@ pub fn start(client: reqwest::blocking::Client, mut args: Vec<String>) {
 fn download_file(client: &reqwest::blocking::Client, url: &str) -> Option<File> {
     let mut req = client.get(url);
 
-    if url.contains("i.pximg.net") {
-        req = req.header("Referer", "https://www.pixiv.net/")
-    }
+    req = apply_required_header(req, url);
 
     let response = match req.send() {
         Ok(x) => x,
@@ -107,9 +105,10 @@ fn download_file(client: &reqwest::blocking::Client, url: &str) -> Option<File> 
 
     if !response.status().is_success() {
         println!(
-            "Status: {}\nData: {}",
-            response.status().as_str().red(),
-            response.text().unwrap()
+            "Status: {0}\nData: {2}\nHeaders: {1:#?}",
+            response.status().to_string().red(),
+            response.headers().clone(),
+            response.text().unwrap(),
         );
         return None;
     }
