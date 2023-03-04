@@ -39,10 +39,14 @@ because pixiv image server ([https://i.pximg.net](https://i.pximg.net)) required
   - [png](https://github.com/image-rs/image-png) - Licensed under either of
     - Apache License, Version 2.0 (http://apache.org/licenses/LICENSE-2.0)
     - MIT license (http://opensource.org/licenses/MIT)
+    ---
   - [reqwest](https://github.com/seanmonstar/reqwest) - Licensed under either of
     - Apache License, Version 2.0 (http://apache.org/licenses/LICENSE-2.0)
     - MIT license (http://opensource.org/licenses/MIT)
+    ---
   - [colored](https://github.com/mackwic/colored) - Mozilla Public License 2.0 (https://www.mozilla.org/en-US/MPL/2.0/)
+  
+    ---
   - [clap](https://github.com/clap-rs/clap) - Dual-licensed under Apache 2.0 or MIT.
     - Apache License, Version 2.0 (http://apache.org/licenses/LICENSE-2.0)
     - MIT license (http://opensource.org/licenses/MIT)
