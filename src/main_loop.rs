@@ -16,8 +16,15 @@ pub fn start(client: reqwest::blocking::Client, mut args: Vec<String>) {
 
         if args.is_empty() {
             std::io::stdin().read_line(&mut target).unwrap();
+
+            if target.contains(',') {
+                args = target.rsplit(',')
+                    .map(|s| s.to_string())
+                    .collect();
+                target = args.pop().unwrap().trim().to_string()
+            }
         } else {
-            target = args.pop().unwrap();
+            target = args.pop().unwrap().trim().to_string();
             println!("{}", target)
         }
 
