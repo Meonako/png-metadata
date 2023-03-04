@@ -3,6 +3,8 @@ use std::{fs::File, io::Write};
 use colored::Colorize;
 use reqwest::blocking::Client;
 
+const TEMP_FILE_NAME: &str = "temp.img.png";
+
 fn main() {
     let client = Client::builder()
         .user_agent("PNG Meta Grabber")
@@ -10,12 +12,14 @@ fn main() {
         .expect("build reqwest client");
 
     println!(
-        "Path example:\n\t{}\n\t{}\n\"quit\" / \"stop\" to exit\n",
+        "Path example:\n\t{}\n\t{}\n\"{}\" / \"{}\" to exit",
         "file:C:/Image/background.png".yellow(),
-        "https://i.pximg.net/img-original/img/2023/03/04/00/42/34/105888900_p1.png".yellow()
+        "https://i.pximg.net/img-original/img/2023/03/04/00/42/34/105888900_p1.png".yellow(),
+        "quit".bright_blue(), "stop".bright_blue()
     );
 
     loop {
+        println!("-----------------------------------------------------------------");
         print!("Command: ");
         std::io::stdout().flush().unwrap();
 
@@ -57,12 +61,12 @@ fn main() {
 
                     let image_data = response.bytes().unwrap();
 
-                    File::create("temp.img.png")
+                    File::create(TEMP_FILE_NAME)
                         .unwrap()
                         .write_all(&image_data)
                         .unwrap();
 
-                    File::open("temp.img.png").unwrap()
+                    File::open(TEMP_FILE_NAME).unwrap()
                 }
                 str if str.starts_with("file:") => {
                     let path_string = str.replace("file:", "");
@@ -81,7 +85,7 @@ fn main() {
                     File::open(path).unwrap()
                 }
                 "quit" | "stop" => {
-                    let temp_file = std::path::Path::new("temp.img.png");
+                    let temp_file = std::path::Path::new(TEMP_FILE_NAME);
 
                     if temp_file.exists() {
                         std::fs::remove_file(temp_file).expect("delete file");
@@ -106,7 +110,6 @@ fn main() {
                     "\"Invalid PNG signature\"".red(),
                     ", mostly because the image is not in PNG format".yellow()
                 );
-                println!("-----------------------------------------------------------------");
                 continue;
             }
         };
@@ -121,8 +124,6 @@ fn main() {
         } else {
             println!("{}", "Not found anything!".red())
         }
-
-        println!("-----------------------------------------------------------------");
     }
 }
 
