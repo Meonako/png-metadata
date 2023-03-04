@@ -10,7 +10,7 @@ fn main() {
         .expect("build reqwest client");
 
     println!(
-        "Path example:\n\t{}\n\t{}",
+        "Path example:\n\t{}\n\t{}\n\"quit\" / \"stop\" to exit\n",
         "file:C:/Image/background.png".yellow(),
         "https://i.pximg.net/img-original/img/2023/03/04/00/42/34/105888900_p1.png".yellow()
     );
@@ -24,66 +24,76 @@ fn main() {
 
         println!("-----------------------------------------------------------------");
 
-        let new_file = match user_input.to_lowercase().trim() {
-            str if str.starts_with("http") => {
-                let mut req = client.get(str);
+        let new_file = 
+            match user_input.to_lowercase().trim() {
+                str if str.starts_with("http") => {
+                    let mut req = client.get(str);
 
-                if str.contains("i.pximg.net") {
-                    req = req.header("Referer", "https://www.pixiv.net/")
-                }
+                    if str.contains("i.pximg.net") {
+                        req = req.header("Referer", "https://www.pixiv.net/")
+                    }
 
-                let response = match req.send() {
-                    Ok(x) => x,
-                    Err(e) => {
-                        println!("{}\n{}", e.to_string().red(), "Sometimes, \"reqwest\"/\"hyper\" just randomly spit out error"
-                                .yellow());
+                    let response = match req.send() {
+                        Ok(x) => x,
+                        Err(e) => {
+                            println!(
+                                "{}\n{}",
+                                e.to_string().red(),
+                                "Sometimes, \"reqwest\"/\"hyper\" just randomly spit out error"
+                                    .yellow()
+                            );
+                            continue;
+                        }
+                    };
+
+                    if !response.status().is_success() {
+                        println!(
+                            "Status: {}\nData: {}",
+                            response.status().as_str().red(),
+                            response.text().unwrap()
+                        );
                         continue;
                     }
-                };
 
-                if !response.status().is_success() {
-                    println!(
-                        "Status: {}\nData: {}",
-                        response.status().as_str().red(),
-                        response.text().unwrap()
-                    );
+                    let image_data = response.bytes().unwrap();
+
+                    File::create("temp.img.png")
+                        .unwrap()
+                        .write_all(&image_data)
+                        .unwrap();
+
+                    File::open("temp.img.png").unwrap()
+                }
+                str if str.starts_with("file:") => {
+                    let path_string = str.replace("file:", "");
+                    let path = std::path::Path::new(&path_string);
+
+                    if !path.exists() {
+                        println!(
+                            "{}{}{}",
+                            "File (".red(),
+                            path_string.cyan(),
+                            ") not found!".red()
+                        );
+                        continue;
+                    }
+
+                    File::open(path).unwrap()
+                }
+                "quit" | "stop" => {
+                    let temp_file = std::path::Path::new("temp.img.png");
+
+                    if temp_file.exists() {
+                        std::fs::remove_file(temp_file).expect("delete file");
+                    }
+
+                    break;
+                }
+                _ => {
+                    println!("{}", "Unknown command".red());
                     continue;
                 }
-
-                let image_data = response.bytes().unwrap();
-
-                File::create("temp.img.png")
-                    .unwrap()
-                    .write_all(&image_data)
-                    .unwrap();
-
-                File::open("temp.img.png").unwrap()
-            }
-            str if str.starts_with("file:") => {
-                let path_string = str.replace("file:", "");
-                let path = std::path::Path::new(&path_string);
-
-                if !path.exists() {
-                    println!("{}{}{}", "File (".red(), path_string.cyan(), ") not found!".red());
-                    continue;
-                }
-
-                File::open(path).unwrap()
-            },
-            "quit" | "stop" => {
-                let temp_file = std::path::Path::new("temp.img.png");
-
-                if temp_file.exists() {
-                    std::fs::remove_file(temp_file).expect("delete file");
-                }
-
-                break;
-            }
-            _ => {
-                println!("{}", "Unknown command".red());
-                continue;
-            }
-        };
+            };
 
         let decoder = png::Decoder::new(new_file);
         let reader = match decoder.read_info() {
