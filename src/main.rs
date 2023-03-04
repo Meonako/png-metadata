@@ -20,7 +20,7 @@ fn main() {
 
     loop {
         println!("-----------------------------------------------------------------");
-        print!("Command: ");
+        print!("{}", "Command: ".bright_magenta());
         std::io::stdout().flush().unwrap();
 
         let mut user_input = String::new();
