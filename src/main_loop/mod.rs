@@ -15,6 +15,7 @@ use dir::read_dir;
 
 pub fn start(client: reqwest::blocking::Client, mut args: Vec<String>) {
     loop {
+        remove_temp_file();
         println!("-----------------------------------------------------------------");
         print!("{}", "Command: ".bright_magenta());
         std::io::stdout().flush().unwrap();
@@ -103,7 +104,5 @@ pub fn start(client: reqwest::blocking::Client, mut args: Vec<String>) {
         } else {
             println!("{}", "No Text Metadata found!".red())
         }
-
-        remove_temp_file();
     }
 }
