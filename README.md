@@ -30,8 +30,19 @@ because pixiv image server ([https://i.pximg.net](https://i.pximg.net)) required
 
 - You can pass in multiple targets  
   e.g.
-    - `Command`: `file:1.png, file:2.png` so if file name contains `,`, it'll not work!
-    - `Arguments`: `file:1.png file:2.png`
+    - `Command`: 
+        ```
+        file:1.png, file:2.png
+        ```
+        or 
+        ```
+        file:"1, 2.png", file:"3, 4.png"
+        ``` 
+        if comma (`,`) is in the file name
+    - `Arguments`: 
+        ```
+        ./metadata file:1.png file:2.png
+        ```
 - Apps will try to get text out as much as possible. (checkout `src/utils.rs:get_avaiable_text`)
 
 # Issues
