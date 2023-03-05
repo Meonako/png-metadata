@@ -39,3 +39,28 @@ pub fn apply_required_header(req: reqwest::blocking::RequestBuilder, url: &str) 
         req
     }
 }
+
+// Split function from ChatGPT xD
+pub fn split_ignore_quotes<T: ToString>(s: T) -> Vec<String> {
+    let s = s.to_string();
+
+    let mut result = Vec::new();
+    let mut inside_quotes = false;
+    let mut start = 0;
+
+    for (i, c) in s.chars().enumerate() {
+        if c == '"' {
+            inside_quotes = !inside_quotes;
+        } else if c == ',' && inside_quotes {
+            continue;
+        } else if i == s.len() - 1 {
+            result.push(s[start..=i].to_string());
+        }
+        else if c == ',' {
+            result.push(s[start..i].to_string());
+            start = i + 1;
+        }
+    }
+
+    result
+}

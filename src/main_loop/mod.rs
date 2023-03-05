@@ -26,12 +26,12 @@ pub fn start(client: reqwest::blocking::Client, mut args: Vec<String>) {
             std::io::stdin().read_line(&mut target).unwrap();
 
             if target.contains(',') {
-                args = target.rsplit(',').map(|s| s.to_string()).collect();
-                target = args.pop().unwrap().trim().to_string()
+                args = split_ignore_quotes(target);
+                target = args.pop().unwrap().trim().to_string();
             }
         } else {
             target = args.pop().unwrap().trim().to_string();
-            println!("{}", target)
+            println!("{}", target);
         }
 
         println!("-----------------------------------------------------------------");
@@ -99,10 +99,10 @@ pub fn start(client: reqwest::blocking::Client, mut args: Vec<String>) {
 
         if !all_text.is_empty() {
             for (key, value) in all_text {
-                println!("{}: {}", key.cyan(), value.green())
+                println!("{}: {}", key.cyan(), value.green());
             }
         } else {
-            println!("{}", "No Text Metadata found!".red())
+            println!("{}", "No Text Metadata found!".red());
         }
     }
 }
