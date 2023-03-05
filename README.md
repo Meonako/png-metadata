@@ -43,7 +43,7 @@ because pixiv image server ([https://i.pximg.net](https://i.pximg.net)) required
         ```
         ./metadata file:1.png file:2.png
         ```
-- Apps will try to get text out as much as possible. (checkout `src/utils.rs:get_avaiable_text`)
+- Apps will try to get text out as much as possible. (checkout `[src/utils.rs:get_avaiable_text](https://github.com/Meonako/png-metadata/blob/master/src/utils.rs#L11)`)
 
 # Issues
 
