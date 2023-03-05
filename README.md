@@ -17,8 +17,12 @@ because pixiv image server ([https://i.pximg.net](https://i.pximg.net)) required
 
 # Usage
 
-- Prefix with `file:` will search for file you specify (e.g. `file:C:/img/example.png`, `file:"C:/secret-img/secret.png"`)
-- Prefix with `http` will download the image and read from that image (e.g `https://mywebserver/example.png`)
+- Prefix with `file:` will search for file you specify
+  > (e.g. `file:C:/img/example.png`, `file:"C:/secret-img/secret.png"`)
+- Prefix with `dir:` will read every `.png` files in the specify directory **EXCLUDES** subfolders  
+  > (e.g. `dir:C:/Pictures/AI generated`, `dir:my image/background collection`)
+- Prefix with `http` will download the image and read from that image  
+  > (e.g `https://mywebserver/example.png`)
 - `clear` | `cls` to clear terminal screen
 - `quit` | `stop` to exit properly
 
@@ -26,13 +30,12 @@ because pixiv image server ([https://i.pximg.net](https://i.pximg.net)) required
 
 - You can pass in multiple targets  
   e.g.
-    - `Command`: `file:1.png, file:2.png`
+    - `Command`: `file:1.png, file:2.png` so if file name contains `,`, it'll not work!
     - `Arguments`: `file:1.png file:2.png`
 - Apps will try to get text out as much as possible. (checkout `src/utils.rs:get_avaiable_text`)
 
 # TODO
 
-- `dir:` read every `.png` files in the specify directory excludes subfolder
 - `search:` read every `.png` files in the specify directory includes subfolder
 
 # Credits
