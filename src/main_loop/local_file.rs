@@ -16,21 +16,21 @@ pub fn open_file(file_name: &str) -> Option<File> {
 
     let path = std::path::Path::new(&path_string);
 
-    if !path.is_file() {
-        println!(
-            "{} {}",
-            path_string.cyan(),
-            "is not a file!"
-        );
-        return None;
-    }
-
     if !path.exists() {
         println!(
             "{}{}{}",
             "File (".red(),
             path_string.cyan(),
             ") not found!".red()
+        );
+        return None;
+    }
+
+    if !path.is_file() {
+        println!(
+            "{} {}",
+            path_string.cyan(),
+            "is not a file!"
         );
         None
     } else {

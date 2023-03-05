@@ -16,11 +16,6 @@ pub fn read_dir(file_name: &str) -> Option<Vec<String>> {
 
     let path = std::path::Path::new(&path_string);
 
-    if !path.is_dir() {
-        println!("\'{}\' {}", path_string.cyan(), "is not a directory!".red());
-        return None;
-    }
-
     if !path.exists() {
         println!(
             "{}{}{}",
@@ -28,6 +23,11 @@ pub fn read_dir(file_name: &str) -> Option<Vec<String>> {
             path_string.cyan(),
             "\") not found!".red()
         );
+        return None;
+    }
+
+    if !path.is_dir() {
+        println!("\'{}\' {}", path_string.cyan(), "is not a directory!".red());
         None
     } else {
         let files_list = match list_dir(path) {
