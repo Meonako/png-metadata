@@ -59,22 +59,22 @@ pub fn start(client: reqwest::blocking::Client, mut args: Vec<String>) {
                     continue;
                 }
             }
-            cmd if cmd.to_lowercase().as_str() == "cls"
-                || cmd.to_lowercase().as_str() == "clear" =>
-            {
-                print!("\x1Bc");
-                std::io::stdout().flush().unwrap();
-                continue;
-            }
-            cmd if cmd.to_lowercase().as_str() == "quit"
-                || cmd.to_lowercase().as_str() == "stop" =>
-            {
-                remove_temp_file();
-                break;
-            }
-            _ => {
-                println!("{}", "Unknown command".red());
-                continue;
+            cmd => {
+                match cmd.to_lowercase().as_str() {
+                    "cls" | "clear" => {
+                        print!("\x1Bc");
+                        std::io::stdout().flush().unwrap();
+                        continue;
+                    }
+                    "quit" | "stop" => {
+                        remove_temp_file();
+                        break;
+                    }
+                    _ => {
+                        println!("{}", "Unknown command".red());
+                        continue;
+                    }
+                }
             }
         };
 
