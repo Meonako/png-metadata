@@ -28,8 +28,12 @@ fn main() {
         "Path example: \n\
         \t{}\n \
         \t{}\n \
+        \t{}\n \
+        \t{}\n \
         \"{}\" / \"{}\" to exit",
-        "file:C:/Image/background.png".yellow(),
+        "dir:images/example".yellow(),
+        "file:My Image/background.png".yellow(),
+        "file:\"C:/Pictures/my pic.png\"".yellow(),
         "https://i.pximg.net/img-original/img/2023/03/04/00/42/34/105888900_p1.png".yellow(),
         "quit".bright_blue(),
         "stop".bright_blue()
