@@ -34,6 +34,13 @@ because pixiv image server ([https://i.pximg.net](https://i.pximg.net)) required
     - `Arguments`: `file:1.png file:2.png`
 - Apps will try to get text out as much as possible. (checkout `src/utils.rs:get_avaiable_text`)
 
+# Issues
+
+- Twitter images (`pbs.twimg.com`)  
+  > I don't have plan to support that because I don't know how to make a request to it  
+  but I found the `x-cache` header so it might required additional lib as it may has to do with HTTP caching  
+  AND I DON'T WANT THAT
+
 # TODO
 
 - `search:` read every `.png` files in the specify directory includes subfolder
