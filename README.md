@@ -2,7 +2,7 @@
 
 Simple PNG text metadata reader that can read from local file and URL.
 
-![image](https://user-images.githubusercontent.com/76484203/222798344-e02b7197-cdd0-4309-8230-0544ff73d74d.png)
+![image](https://user-images.githubusercontent.com/76484203/222964363-eb552e32-80b8-41d1-a28d-d7a505aa19fb.png)
 
 # Why / What's this for?
 
