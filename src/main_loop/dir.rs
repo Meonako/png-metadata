@@ -70,7 +70,7 @@ fn filter_png(entries: ReadDir, prefix: &String) -> Vec<String> {
             png_list.push(format!(
                 "file:{}{}{}",
                 prefix,
-                if prefix.contains('/') { '/' } else { '\\' },
+                if prefix.contains('\\') { '\\' } else { '/' },
                 file_name
             ))
         }
