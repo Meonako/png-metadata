@@ -1,4 +1,4 @@
-use std::fs::read_dir as list_dir;
+use std::fs::{read_dir as list_dir, ReadDir};
 
 use colored::Colorize;
 
@@ -32,18 +32,7 @@ pub fn read_dir(file_name: &str) -> Option<Vec<String>> {
     } else {
         let files_list = match list_dir(path) {
             Ok(entries) => {
-                let mut png_list = Vec::new();
-
-                for entry in entries {
-                    let entry = entry.unwrap();
-                    let file_name = entry.file_name().to_string_lossy().to_string();
-
-                    if file_name.ends_with(".png") {
-                        png_list.push(format!("file:{}{}{}", path_string, if path_string.contains('/') { '/' } else { '\\' }, file_name))
-                    }
-                }
-
-                png_list
+                filter_png(entries, &path_string)
             }
             Err(e) => {
                 println!(
@@ -62,9 +51,30 @@ pub fn read_dir(file_name: &str) -> Option<Vec<String>> {
                 "found in".red(),
                 path_string.cyan(),
                 "directory!".red()
-            )
+            );
+            None
+        } else {
+            Some(files_list.into_iter().rev().collect())
         }
-
-        Some(files_list.into_iter().rev().collect())
     }
+}
+
+fn filter_png(entries: ReadDir, prefix: &String) -> Vec<String> {
+    let mut png_list = Vec::new();
+
+    for entry in entries {
+        let entry = entry.unwrap();
+        let file_name = entry.file_name().to_string_lossy().to_string();
+
+        if file_name.ends_with(".png") {
+            png_list.push(format!(
+                "file:{}{}{}",
+                prefix,
+                if prefix.contains('/') { '/' } else { '\\' },
+                file_name
+            ))
+        }
+    }
+
+    png_list
 }
