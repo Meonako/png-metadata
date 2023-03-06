@@ -7,7 +7,7 @@ Simple PNG text metadata reader that can read from local file and URL.
 # Why / What's this for?
 
 Sometimes, I just want to get generation parameters from an image and most of the time, [exif.tools](https://exif.tools) work just fine  
-**BUT** if you want access to [pixiv image](https://pixiv.net), ***you can't***  
+**BUT** if you want to read PNG metadata from [pixiv](https://pixiv.net), ***you can't***  
 because pixiv image server ([https://i.pximg.net](https://i.pximg.net)) required `referer` - `https://pixiv.net` header
 
 # Installation
