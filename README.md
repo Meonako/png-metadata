@@ -27,6 +27,7 @@ because pixiv image server ([https://i.pximg.net](https://i.pximg.net)) required
   > (e.g `https://mywebserver/example.png`)
 - `clear` | `cls` to clear terminal screen
 - `quit` | `stop` to exit properly
+- `update` to check for update
 
 ---
 
