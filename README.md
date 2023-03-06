@@ -20,7 +20,7 @@ because pixiv image server ([https://i.pximg.net](https://i.pximg.net)) required
 - Prefix with `file:` will search for file you specify
   > (e.g. `file:C:/img/example.png`, `file:"C:/secret-img/secret.png"`)
 - Prefix with `dir:` will read every `.png` files in the specify directory **EXCLUDES** subfolders  
-  > (e.g. `dir:C:/Pictures/AI generated`, `dir:my image/background collection`)\
+  > (e.g. `dir:C:/Pictures/AI generated`, `dir:my image/background collection`)
 - Prefix with `search:` will read every `.png` files in the specify directory **INCLUDES** subfolders
   > (e.g. `search:image collection`, `search:scan these subfolders`)
 - Prefix with `http` will download the image and read from that image  
