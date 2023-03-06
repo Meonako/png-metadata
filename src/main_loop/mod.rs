@@ -13,6 +13,9 @@ use local_file::open_file;
 mod dir;
 use dir::read_dir;
 
+mod search;
+use search::search_dir;
+
 pub fn start(client: reqwest::blocking::Client, mut args: Vec<String>) {
     loop {
         remove_temp_file();
@@ -53,6 +56,15 @@ pub fn start(client: reqwest::blocking::Client, mut args: Vec<String>) {
             }
             t if t.starts_with("dir:") => {
                 if let Some(entries) = read_dir(t) {
+                    println!("{} {} {}", "Found".green(), entries.len(), "PNG image(s)".green());
+                    args = entries;
+                    continue;
+                } else {
+                    continue;
+                }
+            }
+            t if t.starts_with("search:") => {
+                if let Some(entries) = search_dir(t) {
                     println!("{} {} {}", "Found".green(), entries.len(), "PNG image(s)".green());
                     args = entries;
                     continue;
