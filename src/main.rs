@@ -8,6 +8,8 @@ use structs::Arguments;
 mod utils;
 mod main_loop;
 
+mod update;
+
 const TEMP_FILE_NAME: &str = "temp.img.png";
 
 fn main() {

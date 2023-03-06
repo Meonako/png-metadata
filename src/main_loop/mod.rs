@@ -71,6 +71,10 @@ pub fn start(client: reqwest::blocking::Client, mut args: Vec<String>) {
                         remove_temp_file();
                         break;
                     }
+                    "update" => {
+                        crate::update::check_for_update(&client);
+                        continue;
+                    }
                     _ => {
                         println!("{}", "Unknown command".red());
                         continue;
