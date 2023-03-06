@@ -32,7 +32,7 @@ pub fn read_dir(file_name: &str) -> Option<Vec<String>> {
     } else {
         let files_list = match list_dir(path) {
             Ok(entries) => {
-                filter_png(entries, &path_string)
+                filter_png(entries)
             }
             Err(e) => {
                 println!(
@@ -59,18 +59,16 @@ pub fn read_dir(file_name: &str) -> Option<Vec<String>> {
     }
 }
 
-fn filter_png(entries: ReadDir, prefix: &String) -> Vec<String> {
+fn filter_png(entries: ReadDir) -> Vec<String> {
     let mut png_list = Vec::new();
 
     for entry in entries {
         let entry = entry.unwrap();
-        let file_name = entry.file_name().to_string_lossy().to_string();
+        let file_name = entry.path().to_string_lossy().to_string();
 
         if file_name.ends_with(".png") {
             png_list.push(format!(
-                "file:{}{}{}",
-                prefix,
-                if prefix.contains('\\') { '\\' } else { '/' },
+                "file:{}",
                 file_name
             ))
         }
