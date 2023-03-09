@@ -1,4 +1,4 @@
-# png-metadata
+# png-metadata (Outdated README. I'll update this later)
 
 Simple PNG text metadata reader that can read from local file and URL.
 
