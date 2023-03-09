@@ -3,18 +3,10 @@ use std::fs::{read_dir as list_dir, ReadDir};
 use colored::Colorize;
 
 pub fn search_dir(file_name: &str) -> Option<Vec<String>> {
-    let mut path_string = file_name.replace("search:", "");
+    let file_name = file_name.replace("all:", "");
+    let path_string = file_name.trim().trim_matches('"');
 
-    if path_string.starts_with("\"") && path_string.ends_with("\"") {
-        // Remove first and last double quote
-        // I don't know which one is more efficient, so...
-        //
-        // path_string = path_string[1..path_string.len() - 1].to_string()
-        //
-        path_string = path_string.replace("\"", "")
-    }
-
-    let path = std::path::Path::new(&path_string);
+    let path = std::path::Path::new(path_string);
 
     if !path.exists() {
         println!(
@@ -68,7 +60,7 @@ fn filter_png_and_read_subfolder(entries: ReadDir) -> Vec<String> {
             let file_name = entry.path().to_string_lossy().to_string();
 
             if file_name.ends_with(".png") {
-                png_list.push(format!("file:{}", file_name))
+                png_list.push(file_name)
             }
         } else if entry_full_path.is_dir() {
             let result = search_dir(&entry_full_path.to_string_lossy().to_string());
