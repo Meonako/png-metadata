@@ -32,7 +32,10 @@ pub fn get_avaiable_text(info: &png::Info) -> Vec<(String, String)> {
     result
 }
 
-pub fn apply_required_header(req: reqwest::blocking::RequestBuilder, url: &str) -> reqwest::blocking::RequestBuilder {
+pub fn apply_required_header(
+    req: reqwest::blocking::RequestBuilder,
+    url: &str,
+) -> reqwest::blocking::RequestBuilder {
     if url.contains("i.pximg.net") {
         req.header("referer", "https://www.pixiv.net/")
     } else {
@@ -55,8 +58,7 @@ pub fn split_ignore_quotes<T: ToString>(s: T) -> Vec<String> {
             continue;
         } else if i == s.len() - 1 {
             result.push(s[start..=i].to_string());
-        }
-        else if c == ',' {
+        } else if c == ',' {
             result.push(s[start..i].to_string());
             start = i + 1;
         }
