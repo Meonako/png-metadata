@@ -2,7 +2,7 @@
 
 Simple PNG text metadata reader that can read from local file and URL.
 
-![image](https://user-images.githubusercontent.com/76484203/222964363-eb552e32-80b8-41d1-a28d-d7a505aa19fb.png)
+![image](https://user-images.githubusercontent.com/76484203/224237863-950ccbc8-15cd-47a1-a769-fb099ffb7ae2.png)
 
 # Why / What's this for?
 
@@ -12,21 +12,19 @@ because pixiv image server ([https://i.pximg.net](https://i.pximg.net)) required
 
 # Installation
 
-1. Build from source or download (Windows) pre-built from [releases](https://github.com/Meonako/png-metadata/releases)
+1. Build from source or download Windows pre-built from [releases](https://github.com/Meonako/png-metadata/releases)
 2. Run executable or pass the argument to the executable
 
 # Usage
 
-- Prefix with `file:` will search for file you specify
-  > (e.g. `file:C:/img/example.png`, `file:"C:/secret-img/secret.png"`)
-- Prefix with `dir:` will read every `.png` files in the specify directory **EXCLUDES** subfolders  
-  > (e.g. `dir:C:/Pictures/AI generated`, `dir:my image/background collection`)
-- Prefix with `search:` will read every `.png` files in the specify directory **INCLUDES** subfolders
-  > (e.g. `search:image collection`, `search:scan these subfolders`)
+- Prefix with `all:` will read every `.png` files in the specify directory **INCLUDES** subfolders
+  > (e.g. `all:image collection`, `all: "scan these subfolders"`)
 - Prefix with `http` will download the image and read from that image  
-  > (e.g `https://mywebserver/example.png`)
+  > (e.g `https://mydoma.in/example.png`)
+- If not with the 2 above prefix and all commands below, It'll read every `.png` found in directory OR a file
+  > (e.g. `C:\Pictures\My Image Collection`, `My Image Collection/example.png`)
 - `clear` | `cls` to clear terminal screen
-- `quit` | `stop` to exit properly
+- `quit` | `stop` | `exit` to exit properly
 - `update` to check for update
 
 ---
@@ -35,20 +33,20 @@ because pixiv image server ([https://i.pximg.net](https://i.pximg.net)) required
   e.g.
     - `Command`: 
         ```
-        file:1.png, file:2.png
+        1.png, 2.png
         ```
         or 
         ```
-        file:"1, 2.png", file:"3, 4.png"
+        "1, 2.png", "3, 4.png"
         ``` 
         if comma (`,`) is in the file name
     - `Arguments`: 
         ```
-        ./metadata file:1.png file:2.png
+        ./metadata 1.png 2.png
         ```
         or
         ```
-        ./metadata "file:this file contains space"
+        ./metadata "this file or dir contains space"
         ```
         if space (` `) is in the file name
 - Apps will try to get text out as much as possible. (checkout [`src/utils.rs:get_avaiable_text`](https://github.com/Meonako/png-metadata/blob/master/src/utils.rs#L11))
@@ -56,13 +54,9 @@ because pixiv image server ([https://i.pximg.net](https://i.pximg.net)) required
 # Issues
 
 - Twitter images (`pbs.twimg.com`)  
-  > I don't have plan to support that because I don't know how to make a request to it  
+  > I don't have plan to support this because I don't know how to make a request to it  
   but I found the `x-cache` header so it might required additional lib as it may has to do with HTTP caching  
   AND I DON'T WANT THAT
-
-# TODO
-
-- GUI version maybe?
 
 # Credits
   - [png](https://github.com/image-rs/image-png) - Licensed under either of
