@@ -26,20 +26,35 @@ fn main() {
             .rev()
             .collect::<Vec<String>>();
 
-    println!(
-        "Path example: \n\
-        \t{}\n \
-        \t{}\n \
-        \t{}\n \
-        \t{}\n \
-        \"{}\" / \"{}\" to exit",
-        "dir:images/example".yellow(),
-        "file:My Image/background.png".yellow(),
-        "file:\"C:/Pictures/my pic.png\"".yellow(),
-        "https://i.pximg.net/img-original/img/2023/03/04/00/42/34/105888900_p1.png".yellow(),
-        "quit".bright_blue(),
-        "stop".bright_blue()
-    );
+    print_help();
 
     main_loop::start(client, argument);
+}
+
+pub fn print_help() {
+    println!("\
+        {} will read from a directory if is dir\n\
+        {} will read from a file if is file\n\
+        Multiple Commands: {} will work like 2 above in order \n\
+        {} will ignore comma (,) in file name\n\
+        {} will download the image from the URL and read it\n\
+        ------------------------------\n\
+        \"{}\" / \"{}\" to clear terminal screen\n\
+        ------------------------------\n\
+        \"{}\" to check for update\n\
+        ------------------------------\n\
+        \"{}\" / \"{}\" / \"{}\" to exit",
+
+        "images/example".yellow(),
+        "My Image/background.png".yellow(),
+        "images/example, My Image/background.png".yellow(),
+        "\"C:/Pictures/my pic, family.png\"".yellow(),
+        "https://mydomain.dom/img/example.png".yellow(),
+
+        "cls".bright_blue(), "clear".bright_blue(),
+
+        "update".bright_blue(),
+
+        "quit".bright_blue(), "stop".bright_blue(), "exit".bright_blue(),
+    );
 }

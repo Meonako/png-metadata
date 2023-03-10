@@ -89,12 +89,16 @@ pub fn start(client: reqwest::blocking::Client, mut args: Vec<String>) {
                     std::io::stdout().flush().unwrap();
                     continue 'main;
                 }
-                "quit" | "stop" => {
+                "quit" | "stop" | "exit" => {
                     remove_temp_file();
                     break 'main;
                 }
                 "update" => {
                     crate::update::check_for_update(&client);
+                    continue 'main;
+                }
+                "help" => {
+                    crate::print_help();
                     continue 'main;
                 }
                 _ => {
